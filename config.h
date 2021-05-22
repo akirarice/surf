@@ -133,6 +133,11 @@ static SiteSpecific certs[] = {
 	{ "://suckless\\.org/", "suckless.org.crt" },
 };
 
+static SearchEngine searchengines[] = {
+	{ "searx",   "https://searx.bar/search?q=%s"   },
+	{ "yt", "https://www.youtube.com/results?search_query=%s" },
+};
+
 #define MODKEY GDK_CONTROL_MASK
 
 /* hotkeys */
