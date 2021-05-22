@@ -49,6 +49,7 @@ static Parameter defconfig[ParameterLast] = {
 	[Style]               =       { { .i = 1 },     },
 	[WebGL]               =       { { .i = 0 },     },
 	[ZoomLevel]           =       { { .f = 1.0 },   },
+	[ClipboardNotPrimary] =				{ { .i = 1 },			},
 };
 
 static UriParameters uriparams[] = {
@@ -98,7 +99,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* VIDEOPLAY(URI) */
 #define VIDEOPLAY(u) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "mpv --really-quiet \"$0\"", u, NULL \
+             "mpv --fs --really-quiet \"$0\"", u, NULL \
         } \
 }
 
@@ -206,8 +207,6 @@ static Button buttons[] = {
 	{ OnLink,       MODKEY,         2,      clicknewwindow, { .i = 1 },     1 },
 	{ OnLink,       MODKEY,         1,      clicknewwindow, { .i = 1 },     1 },
 	{ OnAny,        0,              8,      clicknavigate,  { .i = -1 },    1 },
-	{ OnAny,        0,              9,      clicknavigate,  { .i = +1 },    1 },
-	{ OnMedia,      MODKEY,         1,      clickexternplayer, { 0 },       1 },
 };
 
 #define HOMEPAGE "https://searx.bar/"
