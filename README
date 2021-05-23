@@ -1,3 +1,19 @@
+#Akira's Suckless Surf
+A patched version of Suckless's Surf  
+for a tabbed version, install my version of tabbed and run as:  
+tabbed surf -e  
+  
+press ctrl+o to pipe a youtube video url to mpv  
+
+For in browser video, install gstreamer,gst-plugins-good, and gst-libav.
+
+#Bookmarks
+I run a external dmenu script for bookmarks. The scripts I use to handle bookmarks are in my dotfiles. Here's the procedure:  
+1. On the page you want to bookmark, ctrl+y to 'yank' the url  
+2. run bookmarker to add your bookmark to ~/.config/surf/bookmarks and ~/.config/surfbookmark_titles. Bookmarker gets the webpage you are on and the html title of that webpage and stores it.
+3. run bookmarksurf. You  will get a dmenu prompt with all of you urls and their associated title. if you type in a website or your bookmark, surf will open in tabbed form to that page. If you type in a non-web address, surf will open with an instance of searx with the text you entered.
+
+
 surf - simple webkit-based browser
 ==================================
 surf is a simple Web browser based on WebKit/GTK+.
