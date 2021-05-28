@@ -71,7 +71,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 #define SETPROP(r, s, p) { \
         .v = (const char *[]){ "/bin/sh", "-c", \
              "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
-             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat ~/.config/surf/bookmarks)\" " \
+             "| sed \"s/^$2(STRING) = //;s/^\\\"\\(.*\\)\\\"$/\\1/\" && cat $BOOKMARKS/bookmarks)\" " \
              "| dmenu -l 10 -p \"$4\" -w $1)\" && " \
              "xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
              "surf-setprop", winid, r, s, p, NULL \
@@ -99,7 +99,7 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* VIDEOPLAY(URI) */
 #define VIDEOPLAY(u) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
-             "mpv --fs --really-quiet \"$0\"", u, NULL \
+             "mpv --really-quiet \"$0\"", u, NULL \
         } \
 }
 
@@ -134,8 +134,9 @@ static SiteSpecific certs[] = {
 };
 
 static SearchEngine searchengines[] = {
-	{ "searx",   "https://searx.bar/search?q=%s"   },
+	{ "searx", "https://searx.bar/search?q=%s" },
 	{ "yt", "https://www.youtube.com/results?search_query=%s" },
+	{ "ddg", "https://www.duckduckgo.com/?q=%s" },
 };
 
 #define MODKEY GDK_CONTROL_MASK
@@ -152,7 +153,7 @@ static Key keys[] = {
 	{ MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
 	{ MODKEY,                GDK_KEY_m,      spawn,      BM_ADD("_SURF_URI") },
 
-	{ MODKEY,                GDK_KEY_o,      playexternal, { 0 } },
+	{ MODKEY,                GDK_KEY_w,      playexternal, { 0 } },
 
 	{ 0,                     GDK_KEY_Escape, stop,       { 0 } },
 	{ MODKEY,                GDK_KEY_c,      stop,       { 0 } },
@@ -192,7 +193,6 @@ static Key keys[] = {
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      toggleinspector, { 0 } },
 
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_c,      toggle,     { .i = CaretBrowsing } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages } },
@@ -214,4 +214,4 @@ static Button buttons[] = {
 	{ OnAny,        0,              8,      clicknavigate,  { .i = -1 },    1 },
 };
 
-#define HOMEPAGE "https://searx.bar/"
+#define HOMEPAGE "https://duckduckgo.com/"
