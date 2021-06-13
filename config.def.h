@@ -61,6 +61,11 @@ static int winsize[] = { 800, 600 };
 static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
                                     WEBKIT_FIND_OPTIONS_WRAP_AROUND;
 
+static SearchEngine searchengines[] = {
+	{ "ddg",   "https://duckduckgo.com/?q=%s"   },
+	{ "bol", "https://www.bol.com/nl/s/?searchtext=%s" },
+	{ "yt", "https://www.youtube.com/results?search_query=%s" },
+};
 #define PROMPT_GO   "Go:"
 #define PROMPT_FIND "Find:"
 
@@ -123,7 +128,7 @@ static SiteSpecific certs[] = {
 
 #define BM_PICK { .v = (char *[]){ "/bin/sh", "-c", \
 "xprop -id $0 -f _SURF_GO 8s -set _SURF_GO \
-`cat ~/.local/share/bookmarks/bookmark_titles | dmenu -ix | xargs -I x sed 'x!d' ~/.local/share/bookmarks/bookmarks || exit 0`", \
+`cat ~/.local/share/bookmarks/bookmark_titles | dmenu -ix -l 20 | xargs -I x sed 'x!d' ~/.local/share/bookmarks/bookmarks || exit 0`", \
 winid, NULL } }
 /* hotkeys */
 /*
