@@ -1,11 +1,11 @@
 /* modifier 0 means no modifier */
 static int surfuseragent    = 1;  /* Append Surf version to default WebKit user agent */
 static char *fulluseragent  = ""; /* Or override the whole user agent string */
-static char *scriptfile     = "~/.surf/script.js";
-static char *styledir       = "~/.surf/styles/";
-static char *certdir        = "~/.surf/certificates/";
-static char *cachedir       = "~/.surf/cache/";
-static char *cookiefile     = "~/.surf/cookies.txt";
+static char *scriptfile     = "~/.config/surf/script.js";
+static char *styledir       = "~/.config/surf/styles/";
+static char *certdir        = "~/.config/surf/certificates/";
+static char *cachedir       = "~/.config/surf/cache/";
+static char *cookiefile     = "~/.config/surf/cookies.txt";
 
 /* Webkit default features */
 /* Highest priority value will be used.
@@ -128,7 +128,7 @@ static SiteSpecific certs[] = {
 
 #define BM_PICK { .v = (char *[]){ "/bin/sh", "-c", \
 "xprop -id $0 -f _SURF_GO 8s -set _SURF_GO \
-`cat ~/.local/share/bookmarks/bookmark_titles | dmenu -ix -l 20 | xargs -I x sed 'x!d' ~/.local/share/bookmarks/bookmarks || exit 0`", \
+`x=$(dmenu -ix -l 20 < $BOOKMARKS/bookmark_titles); sed $x'!d' $BOOKMARKS/bookmarks || exit 0`", \
 winid, NULL } }
 /* hotkeys */
 /*
