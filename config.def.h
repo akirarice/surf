@@ -112,7 +112,9 @@ static SearchEngine searchengines[] = {
  */
 static SiteSpecific styles[] = {
 	/* regexp               file in $styledir */
-	{ ".*",                 "default.css" },
+	{ ".*archlinux.org.*",       "archlinux.css" },
+	{ ".*suckless.org.*",       "suckless.css" },
+	{ ".*medium.com.*",	    "medium.css" },
 };
 
 /* certificates */
@@ -126,10 +128,22 @@ static SiteSpecific certs[] = {
 
 #define MODKEY GDK_CONTROL_MASK
 
-#define BM_PICK { .v = (char *[]){ "/bin/sh", "-c", \
+/* #define BM_PICK { .v = (char *[]){ "/bin/sh", "-c", \
 "xprop -id $0 -f _SURF_GO 8s -set _SURF_GO \
 `x=$(dmenu -ix -l 20 < $BOOKMARKS/bookmark_titles); sed $x'!d' $BOOKMARKS/bookmarks || exit 0`", \
-winid, NULL } }
+	winid, NULL } } */
+
+#define BMPROP(r, s, p) { \
+         .v = (const char *[]){ "/bin/sh", "-c", \
+              "prop=\"$(printf '%b' \"$(xprop -id $1 $2 " \
+              "| cat $BOOKMARKS/bookmark_titles)\" " \
+              "| dmenu -l 10 -ix -p \"$4\" -w $1 | xargs -I x sed 'x''!d' $BOOKMARKS/bookmarks)\" && " \
+              "xprop -id $1 -f $3 8s -set $3 \"$prop\"", \
+              "surf-setprop", winid, r, s, p, NULL \
+         } \
+ }
+
+
 /* hotkeys */
 /*
  * If you use anything else but MODKEY and GDK_SHIFT_MASK, don't forget to
@@ -142,7 +156,8 @@ static Key keys[] = {
 	{ MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
 	{ 0,                     GDK_KEY_Escape, stop,       { 0 } },
 	{ MODKEY,                GDK_KEY_c,      stop,       { 0 } },
-	{ MODKEY,               GDK_KEY_b,      spawn,      BM_PICK },
+	/*{ MODKEY,                GDK_KEY_b,      spawn,      BM_PICK },*/
+	{ MODKEY,                GDK_KEY_b,      spawn,      BMPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_r,      reload,     { .i = 1 } },
 	{ MODKEY,                GDK_KEY_r,      reload,     { .i = 0 } },
 
@@ -178,7 +193,7 @@ static Key keys[] = {
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_o,      toggleinspector, { 0 } },
 
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_c,      toggle,     { .i = CaretBrowsing } },
-	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },
+	/* { MODKEY|GDK_SHIFT_MASK, GDK_KEY_f,      toggle,     { .i = FrameFlattening } },*/
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_g,      toggle,     { .i = Geolocation } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_s,      toggle,     { .i = JavaScript } },
 	{ MODKEY|GDK_SHIFT_MASK, GDK_KEY_i,      toggle,     { .i = LoadImages } },
